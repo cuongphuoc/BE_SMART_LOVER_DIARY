@@ -20,7 +20,7 @@
     "nodejs",
     "nodejs"
   ],
-  "author": "sondn",
+  "author": "C2SE.08_CAPSTONE",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/sondnpt00343/nodejs_blog/issues"
@@ -38,9 +38,10 @@
     "dotenv": "^16.4.7",
     "express": "^4.17.1",
     "express-handlebars": "^5.1.0",
+    "express-validator": "^7.2.1",
     "method-override": "^3.0.0",
     "mongoose": "^5.9.27",
-    "mongoose-delete": "^0.5.2",
+    "mongoose-delete": "^0.5.4",
     "mongoose-slug-generator": "^1.0.4",
     "sass": "^1.85.0"
   },
