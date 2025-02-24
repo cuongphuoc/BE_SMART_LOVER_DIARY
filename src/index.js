@@ -3,7 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const handlebars = require('express-handlebars');
-
+require('./util/dotenv'); // cấu hình biến môi trường .env
 const route = require('./routes');
 const db = require('./config/db');
 
@@ -11,7 +11,6 @@ const db = require('./config/db');
 db.connect();
 
 const app = express();
-const port = 3000;
 
 // Use static folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -44,6 +43,6 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 // Routes init
 route(app);
 
-app.listen(port, () =>
-    console.log(`App listening at http://localhost:${port}`),
+app.listen(process.env.PORT, () =>
+    console.log(`App listening at http://localhost:${process.env.PORT}`),
 );
