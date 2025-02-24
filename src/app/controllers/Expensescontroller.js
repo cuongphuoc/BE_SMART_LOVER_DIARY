@@ -13,14 +13,12 @@ class ExpensesController {
                     .status(404)
                     .json({ message: 'No expenses found for this couple' });
             }
-
             res.status(200).json(expenses);
         } catch (error) {
             next(error);
         }
     }
-
-    async createExpenses(req, res, next) {
+    async createExpenses(req, res) {
         try {
             const expense = new Expenses(req.body);
             const savedExpense = await expense.save();
