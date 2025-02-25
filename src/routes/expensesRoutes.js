@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const expensesController = require('../app/controllers/Expensescontroller');
+
 // [GET] /api/expenses/get-expenses - Get expense
-router.post('/create-expenses/:id', expensesController.getExpenses);
+router.get('/get-expenses/:id', expensesController.getExpenses);
 // [POST] /api/expenses - Add expense
 router.post('/create-expenses', expensesController.createExpenses);
 // [PUT] /api/expenses/update-expenses/:id - edit expense

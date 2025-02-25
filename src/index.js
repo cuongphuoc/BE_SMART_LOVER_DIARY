@@ -1,11 +1,12 @@
 const path = require('path');
 const express = require('express');
+const fs = require('fs');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
 const handlebars = require('express-handlebars');
 require('./util/dotenv'); // cấu hình biến môi trường .env
 const route = require('./routes');
-const db = require('./config/db');
+const db = require('./config/Database/connect.Database');
 
 // Connect to DB
 db.connect();
@@ -15,6 +16,10 @@ const app = express();
 // Use static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+const uploadDir = path.join(__dirname, 'src', 'uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
 app.use(
     express.urlencoded({
         extended: true,

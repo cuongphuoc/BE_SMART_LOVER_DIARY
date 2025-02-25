@@ -1,4 +1,4 @@
-const Expenses = require('../models/Expense');
+const Expenses = require('../models/ExpenseModel');
 
 // [POST] /api/expenses - thêm expense
 class ExpensesController {
