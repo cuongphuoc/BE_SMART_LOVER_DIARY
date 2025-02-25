@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const expensesController = require('../app/controllers/Expensescontroller');
+const expensesController = require('../app/controllers/ExpensesController');
 
 // [GET] /api/expenses/get-expenses - Get expense
 router.get('/get-expenses/:id', expensesController.getExpenses);

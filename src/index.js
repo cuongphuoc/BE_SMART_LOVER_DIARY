@@ -6,7 +6,7 @@ const methodOverride = require('method-override');
 const handlebars = require('express-handlebars');
 require('./util/dotenv'); // cấu hình biến môi trường .env
 const route = require('./routes');
-const db = require('./config/Database/connect.Database');
+const db = require('./config/Database/connectDatabase');
 
 // Connect to DB
 db.connect();
@@ -16,7 +16,7 @@ const app = express();
 // Use static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-const uploadDir = path.join(__dirname, 'src', 'uploads');
+const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }

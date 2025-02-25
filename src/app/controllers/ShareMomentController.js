@@ -1,6 +1,4 @@
-// app/controllers/ShareMomentController.js
-const Moment = require('../models/ShareMomentsModel'); // Đảm bảo model được export đúng
-
+const Moment = require('../models/ShareMomentsModel');
 class ShareMomentController {
     async createMoment(req, res, next) {
         try {
@@ -9,9 +7,9 @@ class ShareMomentController {
 
             // Nếu có file được upload (Multer sẽ gán vào req.file)
             if (req.file) {
-                mediaUrl = `/uploads/${req.file.filename}`;
+                mediaUrl = `uploads/${req.file.filename}`;
             }
-
+            // mid auth
             // Lấy userId từ token (middleware auth đã gán vào req.user)
             //   const userId = req.user && req.user.id ? req.user.id : null;
             //   if (!userId) {

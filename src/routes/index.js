@@ -1,5 +1,5 @@
 const UserRouter = require('./user');
-const ExpensesRouter = require('./expensesRoutes');
+const ExpensesRouter = require('./expensesRoute');
 const ShareMoment = require('./ShareMomentRoutes');
 
 function route(app) {
