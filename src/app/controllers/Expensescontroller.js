@@ -6,7 +6,7 @@ class ExpensesController {
         try {
             // lấy couple id từ params
             const { id } = req.params;
-            const expenses = await Expenses.find({ couple: id });
+            const expenses = await Expenses.find({ coupleId: id });
 
             if (!expenses || expenses.length === 0) {
                 return res

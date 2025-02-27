@@ -9,5 +9,8 @@ router.post(
     multer.single('media'),
     sharingMoment.createMoment,
 );
+// [GET] /api/sharing-moment/get-moment
+router.get('/get-moment/:id', sharingMoment.getMoment);
+router.delete('/delete-moment/:id', sharingMoment.deleteMoment);
 
 module.exports = router;
