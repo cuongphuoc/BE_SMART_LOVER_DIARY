@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 class UserController {
   // [GET] /api/users - Lấy danh sách tất cả người dùng
@@ -32,6 +33,36 @@ class UserController {
       )
       .catch((error) => res.status(400).json({ error: error.message }));
   }
+
+  // [POST] /api/users/register - Đăng ký người dùng với mật khẩu được mã hóa
+  async register(req, res, next) {
+    try {
+        const { name, email, password } = req.body;
+
+        // Kiểm tra thiếu trường bắt buộc
+        if (!name || !email || !password) {
+            return res.status(400).json({ error: 'All fields are required' });
+        }
+
+        // Kiểm tra email đã tồn tại chưa
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'Email already exists' });
+        }
+
+        // Mã hóa mật khẩu
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Tạo người dùng mới
+        const user = new User({ name, email, password: hashedPassword });
+        const savedUser = await user.save();
+
+        res.status(201).json({ message: 'User registered successfully', user: savedUser });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 }
 
 module.exports = new UserController();

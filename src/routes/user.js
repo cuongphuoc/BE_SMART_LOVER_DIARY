@@ -7,7 +7,7 @@ const userController = require('../app/controllers/Usercontroller');
 router.get('/', userController.getData);
 
 // [POST] /api/users - Thêm người dùng mới
-router.post('/', userController.add);
+router.post('/', userController.register);
 
 // [PUT] /api/users/:id - Cập nhật thông tin người dùng theo id
 router.put('/:id', userController.edit);

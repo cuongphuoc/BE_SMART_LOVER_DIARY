@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
-const slug = require('mongoose-slug-generator');
+const { v4: uuidv4 } = require('uuid'); // Import UUID
 const mongooseDelete = require('mongoose-delete');
 
 const Schema = mongoose.Schema;
 
 const Couple = new Schema(
   {
-    user1: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    user2: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    coupleName: { type: String, required: true }, // Ví dụ: "Alice & Bob"
+    id_couple: { type: String, default: uuidv4, unique: true }, // Tạo ID cặp đôi duy nhất
+    id_user1: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    id_user2: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     startDate: { type: Date, required: true }, // Ngày bắt đầu mối quan hệ
-    slug: { type: String, slug: 'coupleName', unique: true },
   },
   {
     timestamps: true,
@@ -18,7 +17,6 @@ const Couple = new Schema(
 );
 
 // Add plugins
-mongoose.plugin(slug);
 Couple.plugin(mongooseDelete, {
   deletedAt: true,
   overrideMethods: 'all',
