@@ -1,4 +1,4 @@
-const userRouter = require('./User');
+const userRouter = require('./user');
 const diaryRouter = require('./diary');
 const coupleRouter = require('./couple');
 function returnRequestData(req, res, next) {
