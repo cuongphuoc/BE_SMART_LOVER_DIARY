@@ -1,28 +1,25 @@
 const Moment = require('../models/ShareMomentsModel');
+const fs = require('fs');
+const path = require('path');
+
 class ShareMomentController {
+    // [POST] /api/moments - Tạo moment mới
     async createMoment(req, res, next) {
         try {
-            const { coupleId, userId, content } = req.body;
+            const { coupleId, content } = req.body;
+            const userId = req.user._id;
             let mediaUrl = null;
+            console.log('req.user:', req.user);
 
-            // Nếu có file được upload (Multer sẽ gán vào req.file)
             if (req.file) {
                 mediaUrl = `uploads/${req.file.filename}`;
             }
-            // mid auth
-            // Lấy userId từ token (middleware auth đã gán vào req.user)
-            //   const userId = req.user && req.user.id ? req.user.id : null;
-            //   if (!userId) {
-            //     return res.status(401).json({ message: 'User is not authenticated' });
-            //   }
 
-            // Tạo một moment mới
             const moment = new Moment({
                 coupleId,
                 userId,
                 content,
                 mediaUrl,
-                createdAt: Date.now(),
             });
 
             await moment.save();
@@ -35,32 +32,61 @@ class ShareMomentController {
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
+
+    // [GET] /api/moments/:id - Lấy tất cả moments theo coupleId
     async getMoment(req, res) {
         try {
             const { id } = req.params;
-            const result = await Moment.find({ coupleId: id });
+            const result = await Moment.find({ coupleId: id }).sort({
+                createdAt: -1,
+            });
+
             if (!result || result.length === 0) {
                 return res
                     .status(404)
                     .json({ message: 'No Moment found for this couple' });
             }
+
             res.status(200).json(result);
         } catch (error) {
             console.error('Error GET moment:', error);
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
+
+    // [DELETE] /api/moments/:id - Xoá moment theo id
     async deleteMoment(req, res) {
         try {
-            const { id } = req.params; // lấy id từ request
-
-            // check xem Moment có tồn tại không
+            const { id } = req.params;
             const moment = await Moment.findById(id);
+
             if (!moment) {
                 return res.status(404).json({ message: 'Moment not found' });
             }
 
-            // xoas Moment
+            // Chỉ người tạo hoặc admin mới có quyền xoá
+            if (
+                req.user.role !== 'admin' &&
+                moment.userId.toString() !== req.user._id.toString()
+            ) {
+                return res
+                    .status(403)
+                    .json({ message: 'Bạn không có quyền xoá moment này' });
+            }
+
+            // Nếu có file đính kèm → xoá file trong thư mục uploads
+            if (moment.mediaUrl) {
+                const filePath = path.join(
+                    __dirname,
+                    '..',
+                    '..',
+                    moment.mediaUrl,
+                );
+                fs.unlink(filePath, (err) => {
+                    if (err) console.error('Không thể xoá file:', err);
+                });
+            }
+
             await Moment.findByIdAndDelete(id);
 
             return res

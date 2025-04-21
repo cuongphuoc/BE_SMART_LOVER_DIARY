@@ -1,21 +1,28 @@
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
-// setup file
+// Tạo thư mục nếu chưa tồn tại
+const uploadDir = 'src/uploads/';
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Cấu hình lưu file
 const storage = multer.diskStorage({
-    // định ngĩa thư mục
     destination: (req, file, cb) => {
-        cb(null, 'src/uploads/'); // folder lưu hính ảnh
+        cb(null, uploadDir);
     },
-    // định nghĩa tên file
     filename: (req, file, cb) => {
         const ext = path.extname(file.originalname);
-        const basename = path.basename(file.originalname, ext);
+        const basename = path
+            .basename(file.originalname, ext)
+            .replace(/\s+/g, '_');
         cb(null, `${Date.now()}-${basename}${ext}`);
     },
 });
 
-// chỉ lấy ảnh và video
+// Chỉ cho phép ảnh và video
 const fileFilter = (req, file, cb) => {
     if (
         file.mimetype.startsWith('image/') ||
@@ -30,6 +37,9 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
     storage,
     fileFilter,
+    limits: {
+        fileSize: 20 * 1024 * 1024, // 20MB (có thể điều chỉnh nếu muốn)
+    },
 });
 
 module.exports = upload;
