@@ -1,8 +1,7 @@
 const User = require('../app/models/User'); // Import model User
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
+require('../config/util/dotenv');
 
-dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 const Authentication = async (req, res, next) => {

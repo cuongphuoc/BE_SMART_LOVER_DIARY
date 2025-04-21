@@ -1,10 +1,9 @@
 const path = require('path');
 const express = require('express');
 const fs = require('fs');
-const morgan = require('morgan');
 const methodOverride = require('method-override');
 const handlebars = require('express-handlebars');
-require('./util/dotenv'); // cấu hình biến môi trường .env
+require('../config/util/dotenv');
 const route = require('./routes');
 const db = require('./config/Database/connectDatabase');
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('../util/multer');
+const multer = require('../config/util/multer');
 const sharingMoment = require('../app/controllers/ShareMomentController');
 const Authentication = require('../Middleware/Authentication');
 // [POST] /api/sharing-moment - Add moment
