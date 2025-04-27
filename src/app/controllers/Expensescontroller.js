@@ -38,7 +38,9 @@ class ExpensesController {
             const updatedExpense = await Expenses.findByIdAndUpdate(
                 id,
                 updateData,
-                { new: true },
+                {
+                    new: true,
+                },
             ); // tìm expense theo id và cập nhật
             if (!updatedExpense) {
                 return res.status(404).json({ message: 'Expense not found' });

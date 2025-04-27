@@ -1,6 +1,6 @@
-const User = require('../app/models/User'); // Import model User
+const User = require('../models/Account');
 const jwt = require('jsonwebtoken');
-require('../config/util/dotenv');
+require('../../util/dotenv');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 

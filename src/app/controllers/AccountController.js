@@ -1,10 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-
+const User = require('../models/Account');
+const CodeCouple = require('../Middleware/CodeCouple');
 class UserController {
     // [GET] /api/users - Lấy danh sách tất cả người dùng
-    getData(req, res, next) {
+    getData(req, res) {
         User.find({}, '-password') // không trả về password
             .then((users) => {
                 if (req.user?.role !== 'admin') {
@@ -21,10 +21,11 @@ class UserController {
     }
 
     // [POST] /api/users/register - ddăng ký người dùng mới
-    register(req, res, next) {
+    register(req, res) {
         if (req.user?.role !== 'admin') {
             req.body.role = 'user'; // nếu không phải admin thì mặc định là user
         }
+        req.body.code = CodeCouple.generateSixDigitNumber();
 
         // mã hóa password trước khi lưu
         bcrypt
@@ -40,7 +41,7 @@ class UserController {
     }
 
     // [POST] /api/users/login - dăng nhập người dùng
-    login(req, res, next) {
+    login(req, res) {
         const { email, password } = req.body;
 
         // kiểm tra email trong cơ sở dữ liệu
@@ -69,20 +70,19 @@ class UserController {
                             },
                         );
 
-                        return res
-                            .status(200)
-                            .json({
-                                message: 'Login successful',
-                                token,
-                                id: user._id,
-                            });
+                        return res.status(200).json({
+                            message: 'Login successful',
+                            token,
+                            id: user._id,
+                            codeCouple: user.code,
+                        });
                     });
             })
             .catch((error) => res.status(500).json({ error: error.message }));
     }
 
     // [PUT] /api/users/:id - sửa thông tin người dùng theo id
-    edit(req, res, next) {
+    edit(req, res) {
         const { role, _id } = req.user;
         const targetId = req.params.id;
 
@@ -103,7 +103,7 @@ class UserController {
     }
 
     // [DELETE] /api/users/:id - xoá mềm người dùng theo id
-    delete(req, res, next) {
+    delete(req, res) {
         const { role, _id } = req.user;
         const targetId = req.params.id;
 

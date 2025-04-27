@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const userController = require('../app/controllers/Usercontroller');
-const Authentication = require('../Middleware/Authentication');
-const checkRole = require('../Middleware/RoleMiddleware');
+const userController = require('../app/controllers/AccountController');
+const Authentication = require('../app/Middleware/Authentication');
+const checkRole = require('../app/Middleware/RoleMiddleware');
 
 // [GET] /api/users - Lấy danh sách tất cả người dùng (chỉ admin)
 router.get('/', Authentication, checkRole('admin'), userController.getData);

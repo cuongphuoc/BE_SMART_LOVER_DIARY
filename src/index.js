@@ -3,7 +3,7 @@ const express = require('express');
 const fs = require('fs');
 const methodOverride = require('method-override');
 const handlebars = require('express-handlebars');
-require('./config/util/dotenv');
+require('./util/dotenv');
 const route = require('./routes');
 const db = require('./config/Database/connectDatabase');
 
