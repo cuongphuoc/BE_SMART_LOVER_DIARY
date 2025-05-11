@@ -1,25 +1,25 @@
 const mongoose = require('mongoose');
-const slug = require('mongoose-slug-generator');
 const mongooseDelete = require('mongoose-delete');
 
 const Schema = mongoose.Schema;
 
 const ExpenseSchema = new Schema(
   {
-    couple: { type: Schema.Types.ObjectId, ref: 'Couple', required: true },
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    description: { type: String, required: true },
-    amount: { type: Number, required: true },
-    // Tùy chọn: tạo slug từ mô tả nếu cần (không bắt buộc là duy nhất)
-    slug: { type: String, slug: 'description', unique: false },
+    id_expense: { type: Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
+    id_couple: { type: Schema.Types.ObjectId, ref: 'Couple' },
+    id_user: { type: Schema.Types.ObjectId, ref: 'User' },
+    description: { type: String },
+    money: { type: Number },
+    date: { type: Date, default: Date.now },
+    kind: { type: String },           // loại chi tiêu, ví dụ: ăn uống, giải trí
+    isexpense: { type: Boolean },     // true: chi, false: thu
   },
   {
     timestamps: true,
   }
 );
 
-// Add plugins
-mongoose.plugin(slug);
+// Add soft-delete plugin
 ExpenseSchema.plugin(mongooseDelete, {
   deletedAt: true,
   overrideMethods: 'all',

@@ -5,15 +5,17 @@ const Schema = mongoose.Schema;
 
 const Diary = new Schema(
   {
+    id_user:{ type: String},
+    id_couple:{type: String},
     id_diary: { type: String, default: uuidv4, unique: true }, // ID nhật ký
     title: { type: String, required: true },
     description: { type: String, required: true },
     link_img: { type: String }, // Link ảnh (có thể để trống)
     kind: { type: Boolean, required: true }, // Loại nhật ký (true/false)
-    date: { type: Date, required: true }, // Ngày diễn ra sự kiện
+    date: { type: Date, required: true }, 
   },
   {
-    timestamps: true, // Tự động thêm createdAt và updatedAt
+    timestamps: true,
   }
 );
 

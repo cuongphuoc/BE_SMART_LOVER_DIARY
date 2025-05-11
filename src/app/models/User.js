@@ -9,14 +9,32 @@ const User = new Schema(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    avatar: { type: String },
     role: { type: String, enum: ['user', 'admin'], default: 'user' },
     slug: { type: String, slug: 'name', unique: true },
+    couplecode: { type: String, unique: true },
+    id_couple: { type: Schema.Types.ObjectId, ref: 'User', default: null },
   },
   {
     timestamps: true,
   },
 );
+
+// Tự động tạo couplecode sau khi tạo user
+User.pre('save', async function (next) {
+  if (!this.couplecode) {
+    const generateCode = () => Math.floor(100000 + Math.random() * 900000).toString();
+
+    let code;
+    let existing;
+    do {
+      code = generateCode();
+      existing = await mongoose.models.User.findOne({ couplecode: code });
+    } while (existing);
+
+    this.couplecode = code;
+  }
+  next();
+});
 
 // Add plugins
 mongoose.plugin(slug);
