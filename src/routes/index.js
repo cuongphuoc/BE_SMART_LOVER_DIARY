@@ -1,9 +1,9 @@
-const User = require('./Account');
 const Expenses = require('./Expense');
 const ShareMoment = require('./ShareMoment');
 const Authentication = require('../app/Middleware/Authentication');
 const Couple = require('./Couple');
 const ToDo = require('./toDo');
+const User = require('./user');
 function route(app) {
     // Gắn router user với đường dẫn /user
     app.use('/api/user', User);

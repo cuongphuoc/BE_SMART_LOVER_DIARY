@@ -6,6 +6,7 @@ const handlebars = require('express-handlebars');
 require('./util/dotenv');
 const route = require('./routes');
 const db = require('./config/Database/connectDatabase');
+const session = require('express-session');
 
 // Connect to DB
 db.connect();
@@ -41,6 +42,15 @@ app.engine(
         },
     }),
 );
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET || 'your-secret-key',
+        resave: false,
+        saveUninitialized: false,
+        cookie: { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 },
+    }),
+);
+
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views'));
 

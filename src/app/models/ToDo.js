@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const slug = require('mongoose-slug-generator');
 const mongooseDelete = require('mongoose-delete');
-const CodeCouple = require('../Middleware/CodeCouple');
 
 const Schema = mongoose.Schema;
 

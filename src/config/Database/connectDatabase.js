@@ -7,6 +7,8 @@ async function connect() {
             useUnifiedTopology: true,
             useCreateIndex: true,
         });
+        await mongoose.connection.collection('users').dropIndex('couplecode_1');
+
         console.log('Connect successfully!!!');
     } catch (error) {
         console.log('Connect failure!!!');
