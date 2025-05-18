@@ -21,8 +21,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });  // Khởi tạo multer với cấu hình trên
 
 // [GET] /api/diaries - Lấy danh sách tất cả nhật ký
-router.get('/', diaryController.getByDate);
-
+router.get('/', authLogin,diaryController.getByDate);
+router.get('/all', authLogin,diaryController.getByCouple);
 // [POST] /api/diaries - Thêm nhật ký mới (sử dụng 'uri' làm tên trường ảnh)
 router.post('/', upload.single('uri'),authLogin, diaryController.add);
 
@@ -30,7 +30,7 @@ router.post('/', upload.single('uri'),authLogin, diaryController.add);
 router.put('/', upload.single('uri'), diaryController.edit);
 
 // [DELETE] /api/diaries/:id - Xóa mềm nhật ký theo id
-router.delete('/:id', diaryController.delete);
+router.delete('/:id',authLogin, diaryController.delete);
 
 // [POST] /api/diaries/test - Thêm nhật ký mới (sử dụng 'uri' làm tên trường ảnh)
 router.post('/base64',authLogin, diaryController.add);

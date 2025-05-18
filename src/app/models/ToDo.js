@@ -6,10 +6,13 @@ const Schema = mongoose.Schema;
 
 const ToDoSchema = new Schema(
   {
-    couple: { type: Schema.Types.ObjectId, ref: 'Couple', required: true },
     task: { type: String, required: true },
-    isCompleted: { type: Boolean, default: false },
     slug: { type: String, slug: 'task', unique: false },
+
+    // Các trường mới thêm
+    id_user: { type: String,  },
+    id_couple: { type: String,  },
+    date: { type: Date }, // hoặc thêm default: Date.now nếu cần
   },
   {
     timestamps: true,

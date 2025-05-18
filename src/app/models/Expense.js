@@ -4,7 +4,8 @@ const mongooseDelete = require('mongoose-delete');
 const Schema = mongoose.Schema;
 
 const ExpenseSchema = new Schema(
-  {
+  {id_user:{ type: String},
+    id_couple:{type: String},
     id_expense: { type: Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
     id_couple: { type: Schema.Types.ObjectId, ref: 'Couple' },
     id_user: { type: Schema.Types.ObjectId, ref: 'User' },

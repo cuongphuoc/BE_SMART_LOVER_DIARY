@@ -24,7 +24,6 @@ class CoupleController {
       console.log("Thiếu thông tin người dùng hoặc mã couplecode.")
       return res.status(400).json({ error: 'Thiếu thông tin người dùng hoặc mã couplecode.' });
     }
-  
     User.findById(currentUser.id).then((currentUserData) => {
       if (currentUserData.id_couple) {
         console.log({ error: 'Bạn đã tham gia một cặp đôi.'+currentUserData.id_couple })
