@@ -114,8 +114,8 @@ async getByDate(req, res) {
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
-}
-,
+},
+
 
   // Delete a diary entry by ID
   async delete(req, res) {
@@ -127,4 +127,5 @@ async getByDate(req, res) {
     }
   }
 };
+
 

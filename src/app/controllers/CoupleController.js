@@ -46,7 +46,7 @@ class CoupleController {
           const newCouple = new Couple({
             id_user1: currentUser.id,
             id_user2: matchedUser._id,
-            startDate: new Date(),
+            startDate: req.body.connectionDate,
           });
   
           return newCouple.save()

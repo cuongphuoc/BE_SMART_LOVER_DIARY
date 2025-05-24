@@ -4,6 +4,8 @@ const coupleRouter = require('./couple');
 const expenseRouter = require('./expense'); // Thêm dòng này
 const chatRouter=require('./chat')
 const todolistRouter=require('./todolist')
+const homeRouter=require('./home')
+const adminRouter=require('./Admin');
 function returnRequestData(req, res, next) {
   const requestData = {
     method: req.method,
@@ -24,6 +26,9 @@ function route(app) {
   app.use('/api/expenses', expenseRouter); 
   app.use('/api/chat',chatRouter);
   app.use('/api/todo',todolistRouter);
+  app.use('/api/home',homeRouter);
+  app.use('/api/admin',adminRouter);
+
   // Thêm dòng này
  // app.use('/api', returnRequestData);
 }

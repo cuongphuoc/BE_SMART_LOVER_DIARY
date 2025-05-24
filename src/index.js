@@ -69,7 +69,7 @@ route(app);
 server.listen(port, '0.0.0.0', async () => {
   console.log(`Server is running at http://192.168.x.x:${port}`);
 
-  try {
+ try {
     const url = await ngrok.connect(port);
     setPublicUrl(url);
     console.log(`Public URL: ${url}`);

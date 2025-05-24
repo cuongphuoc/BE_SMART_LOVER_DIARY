@@ -5,8 +5,10 @@ const userController = require('../app/controllers/Usercontroller');
 const authLogin=require('../app/middleware/AuthenLogin')
 
 // [GET] /api/users - Lấy danh sách tất cả người dùng
+router.get('/profile', authLogin,userController.getProfile);
 router.get('/', authLogin,userController.getData);
-
+router.get('/all',userController.getData);
+router.delete('/',userController.delete);
 // [POST] /api/users - Đăng ký người dùng mới
 router.post('/', userController.register);
 
